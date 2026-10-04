@@ -312,7 +312,6 @@
 
       <div class="gallery-grid">
         
-        <!-- Clean path with no spaces -->
         <div class="gallery-card" onclick="openVideoModal('Assets/demo-video.mp4')">
           <div class="video-thumbnail-container">
             <img src="Assets/TDOMAQ.png" alt="The Dominion of Mysts and Quest Thumbnail">
@@ -364,7 +363,7 @@
 
   <div id="videoModal" class="lightbox-modal" onclick="closeVideoModal()">
     <span class="close-btn" onclick="closeVideoModal()">&times;</span>
-    <video id="modalVideo" class="lightbox-content" controls autoplay onclick="event.stopPropagation()">
+    <video id="modalVideo" class="lightbox-content" controls preload="metadata" onclick="event.stopPropagation()">
       <source id="videoSource" src="" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -407,21 +406,30 @@
     function openVideoModal(videoSrc) {
       var modal = document.getElementById('videoModal');
       var video = document.getElementById('modalVideo');
-      
-      // Setting src directly on the video element ensures instant playback on live domains like Vercel
+      var source = document.getElementById('videoSource');
+
+      source.src = videoSrc;
       video.src = videoSrc;
       video.load();
       modal.classList.add('show');
-      video.play().catch(function(err) {
-        console.log("Video play request failed/blocked: ", err);
-      });
+
+      var playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(function(err) {
+          console.warn("Autoplay was prevented by the browser policy:", err);
+        });
+      }
     }
 
     function closeVideoModal() {
       var modal = document.getElementById('videoModal');
       var video = document.getElementById('modalVideo');
+      var source = document.getElementById('videoSource');
+
       video.pause();
-      video.src = "";
+      video.removeAttribute('src');
+      source.removeAttribute('src');
+      video.load();
       modal.classList.remove('show');
     }
 
