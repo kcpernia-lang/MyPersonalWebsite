@@ -312,8 +312,8 @@
 
       <div class="gallery-grid">
         
-        <!-- Video Card referencing Screen Recording 2026-10-04 221308.mp4 in Assets -->
-        <div class="gallery-card" onclick="openVideoModal('Assets/Screen Recording 2026-10-04 221308.mp4')">
+        <!-- Clean path with no spaces -->
+        <div class="gallery-card" onclick="openVideoModal('Assets/demo-video.mp4')">
           <div class="video-thumbnail-container">
             <img src="Assets/TDOMAQ.png" alt="The Dominion of Mysts and Quest Thumbnail">
             <div class="video-overlay">
@@ -407,9 +407,9 @@
     function openVideoModal(videoSrc) {
       var modal = document.getElementById('videoModal');
       var video = document.getElementById('modalVideo');
-      var source = document.getElementById('videoSource');
       
-      source.src = videoSrc;
+      // Setting src directly on the video element ensures instant playback on live domains like Vercel
+      video.src = videoSrc;
       video.load();
       modal.classList.add('show');
       video.play().catch(function(err) {
@@ -421,6 +421,7 @@
       var modal = document.getElementById('videoModal');
       var video = document.getElementById('modalVideo');
       video.pause();
+      video.src = "";
       modal.classList.remove('show');
     }
 
