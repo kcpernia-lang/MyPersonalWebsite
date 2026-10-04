@@ -230,6 +230,14 @@
       transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
+    video.lightbox-content {
+      width: 80vw;
+      max-width: 1000px;
+      height: auto;
+      max-height: 80vh;
+      background-color: #000000;
+    }
+
     .lightbox-modal.show .lightbox-content {
       transform: scale(1);
     }
@@ -273,6 +281,10 @@
       .gallery-grid {
         grid-template-columns: 1fr;
       }
+
+      video.lightbox-content {
+        width: 95vw;
+      }
     }
   </style>
 </head>
@@ -295,24 +307,25 @@
     <div class="container">
       
       <div class="page-header">
-        <h1 class="page-title"> Krizzy's Gallery</h1>
+        <h1 class="page-title">Krizzy's Gallery</h1>
       </div>
 
       <div class="gallery-grid">
         
-        <div class="gallery-card" onclick="openVideoModal('Assets/IMG_1790.MOV')">
+        <!-- Video Card referencing Screen Recording 2026-10-04 221308.mp4 in Assets -->
+        <div class="gallery-card" onclick="openVideoModal('Assets/Screen Recording 2026-10-04 221308.mp4')">
           <div class="video-thumbnail-container">
-            <img src="Assets/TDOMAQ.png" alt="Writing Process Video Thumbnail">
+            <img src="Assets/TDOMAQ.png" alt="The Dominion of Mysts and Quest Thumbnail">
             <div class="video-overlay">
               <div class="play-btn-circle">▶</div>
-              <div class="video-overlay-title">Sleepless Night Writing</div>
-              <div class="video-overlay-sub">Creating a story I cannot publish yet 🌙</div>
+              <div class="video-overlay-title">The Dominion of Mysts and Quest</div>
+              <div class="video-overlay-sub">Draft Preview 🌙</div>
             </div>
           </div>
         </div>
 
         <div class="gallery-card" onclick="openLightbox(this)">
-          <img src="Assets/Pic1.jpg" alt=" My Gallery Image 1">
+          <img src="Assets/Pic1.jpg" alt="Gallery Image 1">
         </div>
 
         <div class="gallery-card" onclick="openLightbox(this)">
@@ -395,10 +408,13 @@
       var modal = document.getElementById('videoModal');
       var video = document.getElementById('modalVideo');
       var source = document.getElementById('videoSource');
+      
       source.src = videoSrc;
       video.load();
       modal.classList.add('show');
-      video.play();
+      video.play().catch(function(err) {
+        console.log("Video play request failed/blocked: ", err);
+      });
     }
 
     function closeVideoModal() {

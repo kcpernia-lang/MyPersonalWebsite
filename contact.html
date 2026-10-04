@@ -295,10 +295,18 @@
           <h2 class="info-title">Contact Information</h2>
           
           <div class="info-item">
-            <div class="info-icon">✉️</div>
+            <div class="info-icon">✉</div>
             <div class="info-text">
               <h4>Email</h4>
               <p><a href="mailto:yourrepinzzyknnez@gmail.com">yourrepinzzyknnez@gmail.com</a></p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">📞</div>
+            <div class="info-text">
+              <h4>Contact Number</h4>
+              <p><a href="tel:+639123456789">0919 655 0329</a></p>
             </div>
           </div>
 
@@ -319,7 +327,7 @@
           </div>
 
           <div class="info-item">
-            <div class="info-icon">💬</div>
+            <div class="info-icon">📝</div>
             <div class="info-text">
               <h4>Writer's Note</h4>
               <p>Feel free to reach out regarding collaborations, story inquiries, or just to talk about fantasy and writing!</p>
@@ -350,7 +358,7 @@
               <div id="wordCounter" class="word-counter">0 / 1000 words</div>
             </div>
 
-            <button type="submit" class="send-btn">Send Message ✨</button>
+            <button type="submit" class="send-btn">Send Message 🚀</button>
           </form>
         </div>
 
@@ -400,8 +408,16 @@
 
     function handleFormSubmit(event) {
       event.preventDefault();
-      var words = countWords(messageArea.value);
 
+      var nameInput = document.getElementById('name').value.trim();
+      var nameRegex = /^[A-Za-z\s.-]+$/;
+
+      if (!nameRegex.test(nameInput)) {
+        alert('Please enter a valid name. Names should only contain letters and spaces (no numbers or symbols).');
+        return false;
+      }
+
+      var words = countWords(messageArea.value);
       if (words > 1000) {
         alert('Your message exceeds the maximum limit of 1000 words. Please shorten your message before sending.');
         return false;
